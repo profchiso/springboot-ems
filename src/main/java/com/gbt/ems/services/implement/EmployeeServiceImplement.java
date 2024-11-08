@@ -7,6 +7,7 @@ import com.gbt.ems.repositories.EmployeeRepository;
 import com.gbt.ems.services.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 @Service
 @AllArgsConstructor
@@ -20,5 +21,15 @@ public class EmployeeServiceImplement implements EmployeeService {
 
     Employee createdEmployee = employeeRepository.save(employee);
     return EmployeeMapper.mapToEmployeeDto(createdEmployee);
+  }
+
+  @Override
+  public EmployeeDto getEmployee(Long id) {
+    Employee employee = employeeRepository
+      .findById(id)
+      .orElseThrow(() ->
+        new ResourceAccessException("Employee with id " + id + " not found")
+      );
+    return EmployeeMapper.mapToEmployeeDto(employee);
   }
 }

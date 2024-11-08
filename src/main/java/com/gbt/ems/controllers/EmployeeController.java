@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,5 +40,14 @@ public class EmployeeController {
   public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
     List<EmployeeDto> employees = employeeService.getAllEmployees();
     return ResponseEntity.ok(employees);
+  }
+
+  @PatchMapping("{id}")
+  public ResponseEntity<EmployeeDto> updateEmployee(
+    @PathVariable("id") Long id,
+    @RequestBody EmployeeDto employeeDto
+  ) {
+    EmployeeDto employee = employeeService.updateEmployee(id, employeeDto);
+    return ResponseEntity.ok(employee);
   }
 }

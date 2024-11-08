@@ -5,6 +5,8 @@ import com.gbt.ems.entities.Employee;
 import com.gbt.ems.mappers.EmployeeMapper;
 import com.gbt.ems.repositories.EmployeeRepository;
 import com.gbt.ems.services.EmployeeService;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
@@ -31,5 +33,14 @@ public class EmployeeServiceImplement implements EmployeeService {
         new ResourceAccessException("Employee with id " + id + " not found")
       );
     return EmployeeMapper.mapToEmployeeDto(employee);
+  }
+
+  @Override
+  public List<EmployeeDto> getAllEmployees() {
+    List<Employee> employees = employeeRepository.findAll();
+    return employees
+      .stream()
+      .map(emp -> EmployeeMapper.mapToEmployeeDto(emp))
+      .collect(Collectors.toList());
   }
 }

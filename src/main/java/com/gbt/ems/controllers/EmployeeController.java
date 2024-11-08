@@ -2,6 +2,7 @@ package com.gbt.ems.controllers;
 
 import com.gbt.ems.dto.EmployeeDto;
 import com.gbt.ems.services.EmployeeService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,11 @@ public class EmployeeController {
   public ResponseEntity<EmployeeDto> getEmployee(@PathVariable("id") Long id) {
     EmployeeDto employee = employeeService.getEmployee(id);
     return ResponseEntity.ok(employee);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
+    List<EmployeeDto> employees = employeeService.getAllEmployees();
+    return ResponseEntity.ok(employees);
   }
 }
